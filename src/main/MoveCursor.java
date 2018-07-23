@@ -29,7 +29,6 @@ public class MoveCursor {
         
         CursorMover cursorMover = new CursorMover(frame, configGetter);
         FrameListener listener = new FrameListener(cursorMover);
-        frame.addMouseListener(listener);
         frame.addWindowFocusListener(listener);
     }
 }
