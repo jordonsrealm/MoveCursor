@@ -4,13 +4,16 @@ import java.awt.AWTException;
 import java.awt.Point;
 import java.awt.Robot;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
+import configuration.ConfigurationGetter;
 import main.FrameLocation;
 
 
-public class CursorMover implements Runnable {
+public class CursorMover {
 
 	boolean keepGoing = true;
 	Robot robot ;
@@ -18,46 +21,29 @@ public class CursorMover implements Runnable {
 	FrameLocation frameLocation;
 	Thread movingThread;
 	boolean justCreated = true;
+	Timer timer;
 
 	public static final long ONE_SECOND_MILLIS = 1000;
-	public static final int  WAIT_TIME_FACTOR = 5;
+	int waitTimeFactor;
 
 
-	public CursorMover(JFrame frame) throws AWTException {
+	public CursorMover(JFrame frame, ConfigurationGetter configGetter) throws AWTException {
+		waitTimeFactor = configGetter.getTimerPeriod();
+		
 		this.robot = new Robot();
 		this.frame = frame;
 		this.frameLocation = new FrameLocation(frame);
-	}
-
-	public void start() {
-		if(	movingThread != null && movingThread.isAlive()) {
-			stop();		
-		}
-		
-		this.keepGoing = true;
-		this.movingThread = new Thread(this);
-		this.movingThread.start();
-	}
-	
-	public void stopThread() {
-		this.keepGoing = false;
-		if(	movingThread != null) {
-			try {
-				movingThread.join();
-				movingThread = null;
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		timer = new Timer(true);
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				move();
 			}
-
-		}
-	}
-
-	public void stop() {
-		stopThread();
-		lockComputer();
+		};
+		timer.scheduleAtFixedRate(task, 1000, waitTimeFactor * ONE_SECOND_MILLIS);
 	}
 	
-	private void lockComputer() {
+	public void lockComputer() {
 		try {
 			Process p =  Runtime.getRuntime().exec("cmd /c start resources\\LockComputer.bat");
 			p.waitFor();
@@ -65,30 +51,11 @@ public class CursorMover implements Runnable {
 		} catch (InterruptedException e) {
 		}
 	}
-	
-	@Override
-	public void run() {
-		while( true ) {
-			if( keepGoing ) {
-				move();
-			}
-		}
-	}
+
 
 	private void move() {
-		try {
-			Point newPoint = frameLocation.getNextMove();
-			robot.mouseMove(newPoint.x, newPoint.y);
-			sleep();
-			newPoint = frameLocation.getNextMove();
-			robot.mouseMove(newPoint.x, newPoint.y);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static void sleep() throws InterruptedException {
-		Thread.sleep(WAIT_TIME_FACTOR * ONE_SECOND_MILLIS);
+		Point newPoint = frameLocation.getNextMove();
+		robot.mouseMove(newPoint.x, newPoint.y);
 	}
 	
 	public boolean isKeepGoing() {
@@ -97,5 +64,19 @@ public class CursorMover implements Runnable {
 
 	public void setKeepGoing(boolean keepGoing) {
 		this.keepGoing = keepGoing;
+	}
+
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void resetTimer() {
+		this.timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				move();
+			}
+		}, 1000, waitTimeFactor * ONE_SECOND_MILLIS);
 	}
 }
