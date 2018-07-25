@@ -24,6 +24,7 @@ public class FrameListener implements WindowFocusListener {
 	public void windowLostFocus(WindowEvent e) {
 		cursorMover.getTimer().cancel();
 		cursorMover.lockComputer();
+		System.exit(0);
 	}
 
 }
