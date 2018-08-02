@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 
 import configuration.ConfigurationGetter;
 import listeners.FrameListener;
-import runners.CursorMover;
 
 
 public class MoveCursor {

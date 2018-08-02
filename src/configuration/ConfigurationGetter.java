@@ -7,10 +7,6 @@ import java.util.Map;
 public class ConfigurationGetter {
 	
 	private Map<String, String> properties;
-	private static final String TIMER_PERIOD  = "TIMER_PERIOD";
-	private static final String FRAME_WIDTH  = "FRAME_WIDTH";
-	private static final String FRAME_HEIGHT = "FRAME_HEIGHT";
-	private static final String FRAME_TITLE  = "FRAME_TITLE";
 	
 	
 	public ConfigurationGetter() throws IOException {
@@ -23,18 +19,18 @@ public class ConfigurationGetter {
 	}
 	
 	public int getTimerPeriod() {
-		return Integer.parseInt(properties.get(TIMER_PERIOD));
+		return Integer.parseInt(properties.get(ConfigurationGetPropertyValues.TIMER_PERIOD));
 	}
 
 	public int getFrameWidth() {
-		return Integer.parseInt(properties.get(FRAME_WIDTH));
+		return Integer.parseInt(properties.get(ConfigurationGetPropertyValues.FRAME_WIDTH));
 	}
 
 	public int getFrameHeight() {
-		return Integer.parseInt(properties.get(FRAME_HEIGHT));
+		return Integer.parseInt(properties.get(ConfigurationGetPropertyValues.FRAME_HEIGHT));
 	}
 	
 	public String getTitle() {
-		return properties.get(FRAME_TITLE);
+		return properties.get(ConfigurationGetPropertyValues.FRAME_TITLE);
 	}
 }

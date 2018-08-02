@@ -9,11 +9,12 @@ import java.util.Properties;
 
 public class ConfigurationGetPropertyValues {
 	
-	private static final String TIMER_PERIOD = "TIMER_PERIOD";
-	private static final String FRAME_WIDTH = "FRAME_WIDTH";
-	private static final String FRAME_HEIGHT = "FRAME_HEIGHT";
-	private static final String FRAME_TITLE = "FRAME_TITLE";
+	public static final String TIMER_PERIOD = "TIMER_PERIOD";
+	public static final String FRAME_WIDTH = "FRAME_WIDTH";
+	public static final String FRAME_HEIGHT = "FRAME_HEIGHT";
+	public static final String FRAME_TITLE = "FRAME_TITLE";
  
+	
 	public Map<String, String> getPropValues() throws IOException {
 		Properties prop = new Properties();
 		String propFileName = "config.properties";
@@ -32,6 +33,7 @@ public class ConfigurationGetPropertyValues {
 			newHash.put(FRAME_TITLE, prop.getProperty(FRAME_TITLE));
 			
 		} catch (Exception e) {
+			// no logging at the moment
 		}
 		
 		return newHash;
