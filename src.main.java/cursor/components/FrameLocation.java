@@ -5,7 +5,7 @@ import java.awt.Point;
 import javax.swing.JFrame;
 
 
-public class FrameLocation {
+public class FrameLocation implements Locator{
 
 	private JFrame mainFrame;
 
@@ -16,7 +16,17 @@ public class FrameLocation {
 	public FrameLocation(JFrame frame) {
 		this.setMainFrame(frame);
 	}
+
+	public JFrame getMainFrame() {
+		return mainFrame;
+	}
+
+
+	public void setMainFrame(JFrame mainFrame) {
+		this.mainFrame = mainFrame;
+	}
 	
+	@Override
 	public Point getCurrentPoint() {
         // This center around the close button to allow the user to stop
         int closePointX = mainFrame.getLocation().x;
@@ -24,6 +34,7 @@ public class FrameLocation {
 		return new Point(closePointX, closePointY);
 	}
 	
+	@Override
 	public Point getNextMove() {
 		Point nextPoint;
 		Point currentPoint = getCurrentPoint();
@@ -39,14 +50,5 @@ public class FrameLocation {
 		}
 		
 		return nextPoint;
-	}
-
-	public JFrame getMainFrame() {
-		return mainFrame;
-	}
-
-
-	public void setMainFrame(JFrame mainFrame) {
-		this.mainFrame = mainFrame;
 	}
 }

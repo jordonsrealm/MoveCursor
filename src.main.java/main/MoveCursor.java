@@ -19,7 +19,7 @@ public class MoveCursor {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle( configGetter.getTitle() );
-        frame.setSize(configGetter.getFrameWidth(), configGetter.getFrameHeight());
+        frame.setSize( configGetter.getFrameWidth(), configGetter.getFrameHeight());
         
         FrameListener listener = new FrameListener( new CursorMover( frame, configGetter) );
         frame.addWindowFocusListener(listener);

@@ -6,9 +6,8 @@ import javax.swing.JFrame;
 import configuration.ConfigurationGetter;
 
 
-public class CursorMover {
+public class CursorMover implements CursorLocker{
 
-	private boolean keepGoing = true;
 	JFrame frame;
 	private FrameLocation frameLocation;
 	Thread movingThread;
@@ -25,6 +24,7 @@ public class CursorMover {
 		cursorTimer = new CursorTimer(frameLocation, waitTimeFactor * ONE_SECOND_MILLIS);
 	}
 	
+	@Override
 	public void lockComputer() {
 		try {
 			String currentPath =  getClass().getClassLoader().getResources("LockComputer.bat").nextElement().toString();
@@ -38,19 +38,13 @@ public class CursorMover {
 			}
 		}
 	}
-	
-	public boolean isStillGoing() {
-		return keepGoing;
-	}
 
-	public void setKeepGoing(boolean keepGoing) {
-		this.keepGoing = keepGoing;
-	}
-
+	@Override
 	public CursorTimer getTimer() {
 		return cursorTimer;
 	}
 
+	@Override
 	public void resetTimer() {
 		cursorTimer = new CursorTimer(frameLocation, waitTimeFactor * ONE_SECOND_MILLIS);
 	}
