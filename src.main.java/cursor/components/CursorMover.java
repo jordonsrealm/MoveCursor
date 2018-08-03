@@ -1,7 +1,6 @@
 package cursor.components;
 
 import java.io.IOException;
-import java.util.Timer;
 import javax.swing.JFrame;
 
 import configuration.ConfigurationGetter;
@@ -40,7 +39,7 @@ public class CursorMover {
 		}
 	}
 	
-	public boolean isKeepGoing() {
+	public boolean isStillGoing() {
 		return keepGoing;
 	}
 
@@ -48,7 +47,7 @@ public class CursorMover {
 		this.keepGoing = keepGoing;
 	}
 
-	public Timer getTimer() {
+	public CursorTimer getTimer() {
 		return cursorTimer;
 	}
 

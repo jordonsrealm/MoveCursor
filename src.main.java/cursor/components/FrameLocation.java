@@ -24,14 +24,6 @@ public class FrameLocation {
 		return new Point(closePointX, closePointY);
 	}
 	
-	public int getX() {
-		return mainFrame.getLocation().x;
-	}
-	
-	public int getY() {
-		return mainFrame.getLocation().y;
-	}
-	
 	public Point getNextMove() {
 		Point nextPoint;
 		Point currentPoint = getCurrentPoint();
