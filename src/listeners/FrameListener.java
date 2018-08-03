@@ -3,7 +3,7 @@ package listeners;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
-import main.CursorMover;
+import cursor.components.CursorMover;
 
 
 public class FrameListener implements WindowFocusListener {
